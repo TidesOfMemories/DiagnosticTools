@@ -1,6 +1,10 @@
 # Azure Managed Redis Token Validator
 
-This PowerShell script helps validate Microsoft Entra ID (formerly Azure AD) tokens for use with Azure Managed Redis Cache resources. It performs comprehensive token validation and access policy verification to help diagnose authentication issues.
+This PowerShell script helps validate Microsoft Entra ID (formerly Azure Active Directory) tokens for use with Azure Managed Redis Cache resources. It performs comprehensive token validation and access policy verification to help diagnose authentication issues.
+
+Use this script if your application is having trouble using Microsoft Entra ID to authenticate connections to Redis. It will analyze the Entra token you provide and output any issues it finds. 
+
+Note that if your application is failing to acquire a token at all, this script won't be helpful. To diagnose issues preventing token acquisition, we recommend consulting [Entra access token documentation](https://learn.microsoft.com/entra/identity-platform/access-tokens).
 
 ## Features
 
