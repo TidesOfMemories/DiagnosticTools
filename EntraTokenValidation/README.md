@@ -32,17 +32,31 @@ Note that if your application is failing to acquire a token at all, this script 
 - `ResourceId`: The Azure resource ID of the Azure Managed Redis Cache
 
 ### Getting a Token for Testing
+Token acquisition options for testing or production diagnostics.
 
-Token acquisition options for testing or production diagnostics:
-    • Azure CLI: az account get-access-token --resource https://redis.azure.com --query accessToken -o tsv
-    • PowerShell: $token = (Get-AzAccessToken -ResourceUrl 'https://redis.azure.com').Token
-    • Application capture: grab the token from a debugger snapshot or secure trace collector. In
-        production, store the captured token in an encrypted/sealed location, restrict access, purge it
-        immediately after use, and avoid logging the full value (redact if logging is unavoidable and
-        rotate the credential afterward).3. From your application:
-- Capture the token from a debugger snapshot or secure trace collector
-- Store captured tokens securely and purge after testing
-- Avoid logging full token values
+- Azure CLI
+
+```bash
+az account get-access-token --resource https://redis.azure.com --query accessToken -o tsv
+```
+
+- PowerShell (Az module)
+
+```powershell
+$token = (Get-AzAccessToken -ResourceUrl 'https://redis.azure.com').Token
+```
+
+- From your application (capture)
+
+If you need to capture a token from a running application (debugger snapshot, secure trace collector, etc.), follow strict security practices (see below). Capture only what you need and avoid storing tokens in plaintext.
+
+Security best practices when handling captured tokens:
+
+- Store captured tokens only in encrypted/sealed storage and restrict access to a minimal set of principals.
+- Purge captured tokens immediately after testing or diagnostics are complete.
+- Never log full token values. If logging is unavoidable for debugging, redact the value and rotate the credential immediately afterward.
+
+These steps help ensure captured tokens are used safely during diagnostics and are not a source of credential leakage.
 
 ## Example Output
 
